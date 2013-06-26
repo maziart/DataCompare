@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FFA57A97-45B6-446B-B5B3-5249588BDE39}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DBCompare</RootNamespace>
+    <AssemblyName>DBCompare</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.SqlServer.Smo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\ProgressChangedEventHandler.cs" />
+    <Compile Include="Comparers\CancellationException.cs" />
+    <Compile Include="Actions\ProgressChangedEventArgs.cs" />
+    <Compile Include="Comparers\DatabaseComparer.cs" />
+    <Compile Include="Comparers\DetailedTableComparisonResult.cs" />
+    <Compile Include="Comparers\ProjectComparisonResult.cs" />
+    <Compile Include="Comparers\RowComparisonResult.cs" />
+    <Compile Include="Comparers\CompareResult.cs" />
+    <Compile Include="Comparers\TableComparer.cs" />
+    <Compile Include="Comparers\TableComparisonResult.cs" />
+    <Compile Include="Config\ApplicationSettings.cs" />
+    <Compile Include="Config\DataCompareProject.cs" />
+    <Compile Include="Config\DataProvider.cs" />
+    <Compile Include="Config\ProjectConnection.cs" />
+    <Compile Include="Config\ProjectType.cs" />
+    <Compile Include="Config\Table.cs" />
+    <Compile Include="DAL\BackupAndRestore.cs" />
+    <Compile Include="DAL\DataAccess.cs" />
+    <Compile Include="DAL\DataReaderIgnoreAttribute.cs" />
+    <Compile Include="DAL\DefaultValues.cs" />
+    <Compile Include="DAL\DataReader.cs" />
+    <Compile Include="DAL\ObjectReader.cs" />
+    <Compile Include="Model\Column.cs" />
+    <Compile Include="Model\Key.cs" />
+    <Compile Include="Model\KeyAndCheckSum.cs" />
+    <Compile Include="Model\PrimaryKey.cs" />
+    <Compile Include="Model\TableNameAndSchema.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Script.cs" />
+    <Compile Include="Scripts\Token.cs" />
+    <Compile Include="Scripts\TokenType.cs" />
+    <Compile Include="Service\ComparisonDetailsResponse.cs" />
+    <Compile Include="Service\FileResponse.cs" />
+    <Compile Include="Service\HtmlResponse.cs" />
+    <Compile Include="Service\HttpResponse.cs" />
+    <Compile Include="Service\IWebService.cs" />
+    <Compile Include="Service\PingResponse.cs" />
+    <Compile Include="Service\ScriptResponse.cs" />
+    <Compile Include="Service\ServiceAccess.cs" />
+    <Compile Include="Service\WebExtensions.cs" />
+    <Compile Include="Service\WebService.cs" />
+    <Compile Include="UI\Compare.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Compare.Designer.cs">
+      <DependentUpon>Compare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CompareAnimation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CompareAnimation.Designer.cs">
+      <DependentUpon>CompareAnimation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DBBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DbSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DbSelectForm.Designer.cs">
+      <DependentUpon>DbSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ParentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Project.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Project.Designer.cs">
+      <DependentUpon>Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Start.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Start.Designer.cs">
+      <DependentUpon>Start.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="UI\Compare.resx">
+      <DependentUpon>Compare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CompareAnimation.resx">
+      <DependentUpon>CompareAnimation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DbSelectForm.resx">
+      <DependentUpon>DbSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ParentForm.resx">
+      <DependentUpon>ParentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Project.resx">
+      <DependentUpon>Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Start.resx">
+      <DependentUpon>Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Compare.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bullet16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\New.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\A.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Data.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\A64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Compare16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Monitor16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Comp1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Comp2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Comp3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DifferentDatabases.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IdenticalDatabases.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Service\Files\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Service\Files\DBCompare.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Service\Files\images\animated-overlay.gif" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_flat_55_999999_40x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_glass_75_79c9ec_1x400.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_0078ae_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_056b93_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_d8e7f3_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_e0fdff_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_f5e175_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_f7a50d_256x240.png" />
+    <EmbeddedResource Include="Service\Files\images\ui-icons_fcd113_256x240.png" />
+    <EmbeddedResource Include="Service\Files\jquery-ui-1.10.3.custom.min.css" />
+    <EmbeddedResource Include="Service\Files\jquery-ui-1.10.3.custom.min.js" />
+    <EmbeddedResource Include="Service\Files\Table.png" />
+    <EmbeddedResource Include="Service\Files\Script.png" />
+    <EmbeddedResource Include="Service\Files\Right.png" />
+    <EmbeddedResource Include="Service\Files\jquery-1.10.1.min.js" />
+    <EmbeddedResource Include="Service\Files\Tick.png" />
+    <EmbeddedResource Include="Service\Files\DBCompare.js" />
+    <EmbeddedResource Include="Service\Files\CompareTopBG.png" />
+    <EmbeddedResource Include="Service\Files\BodyBG.png" />
+    <EmbeddedResource Include="Service\Files\Down.png" />
+    <Content Include="Favicon.ico" />
+    <EmbeddedResource Include="Service\Files\Favicon.ico" />
+    <None Include="Resources\Script.png" />
+    <Content Include="Service\Files\HTMLPage1.htm" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
