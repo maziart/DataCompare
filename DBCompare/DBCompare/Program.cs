@@ -7,6 +7,7 @@ using DBCompare.Comparers;
 using DBCompare.Config;
 using DBCompare.UI;
 using DBCompare.Service;
+using System.ServiceModel;
 
 namespace DBCompare
 {
@@ -20,20 +21,31 @@ namespace DBCompare
         {
             try
             {
+                ApplicationArguments.Initialize(args);
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 DataCompareProject project = null;
-                if (args.Length == 1)
+                var fileName = ApplicationArguments.Instance[ArgumentType.Open];
+                if (fileName != null)
                 {
-                    project = DataCompareProject.LoadFromFile(args[0]);
+                    project = DataCompareProject.LoadFromFile(fileName);
                 }
                 var mainForm = ServiceAccess.MainForm = new MainForm(project);
                 Application.Run(mainForm);
             }
+            catch (AddressAlreadyInUseException ex) //TODO
+            {
+                ShowError("Failed to register Http Server.\nYou can change the port in .config file or provide argument: Port=[Port#]\n\n" + ex.Message);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError(ex.GetBaseException().Message);
             }
+        }
+        static void ShowError(string message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

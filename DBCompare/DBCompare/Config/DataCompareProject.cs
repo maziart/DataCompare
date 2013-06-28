@@ -128,16 +128,6 @@ namespace DBCompare.Config
             FileName = fileName;
         }
 
-        public bool RequiresBackupRestore
-        {
-            get
-            {
-                if (Type != ProjectType.Monitor)
-                    return false;
-                return ConnectionB == null || !ConnectionB.TryConnect();
-            }
-        }
-
         internal void CreateBackUpAction(out IAction action, out object state)
         {
             var builderA = new SqlConnectionStringBuilder(ConnectionA.ConnectionString);

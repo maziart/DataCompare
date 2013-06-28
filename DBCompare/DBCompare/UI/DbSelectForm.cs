@@ -18,22 +18,15 @@ namespace DBCompare.UI
         }
 
         public string ConnectionString { get; private set; }
-        public bool AllowServerChange
-        {
-            get { return TxtServer.Enabled; }
-            set
-            {
-                TxtServer.Enabled = value;
-                if (!value)
-                {
-                    TxtServer.Text = "(local)";
-                }
-            }
-        }
         public string OkButtonText
         {
             get { return BtnOk.Text; }
             set { BtnOk.Text = value; }
+        }
+        public Image OkButtonImage
+        {
+            get { return BtnOk.Image; }
+            set { BtnOk.Image = value; }
         }
 
 
@@ -53,6 +46,11 @@ namespace DBCompare.UI
         {
             get { return TxtDatabase.Text; }
             set { TxtDatabase.Text = value; }
+        }
+        public string HostName
+        {
+            get;
+            private set;
         }
         private void BtnOk_Click(object sender, EventArgs e)
         {
@@ -111,6 +109,9 @@ namespace DBCompare.UI
                 using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "SELECT HOST_NAME()";
+                    HostName = (string)command.ExecuteScalar();
                 }
                 return true;
             }

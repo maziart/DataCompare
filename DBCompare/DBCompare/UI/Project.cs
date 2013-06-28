@@ -129,13 +129,21 @@ namespace DBCompare.UI
             var builder = new SqlConnectionStringBuilder(connection.ConnectionString);
             using (var selector = new DbSelectForm())
             {
-                selector.AllowServerChange = CompareProject.Type == ProjectType.Compare;
                 selector.Text = title;
                 selector.User = builder.IntegratedSecurity ? "" : builder.UserID;
                 selector.Server = builder.DataSource;
                 selector.Database = builder.InitialCatalog;
+            ShowSelector:
                 if (selector.ShowDialog() != DialogResult.OK)
                     return;
+                if (CompareProject.Type == ProjectType.Monitor)
+                {
+                    if (!Environment.MachineName.Equals(selector.HostName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        MessageBox.Show("For monitoring projects, server must be on the same machine where DBCompare is running.\nThis is for backup and restore purposes.", "Invalid server", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        goto ShowSelector;
+                    }
+                }
                 connection.ConnectionString = selector.ConnectionString;
             }
             FillConnectionButton(button, connection);

@@ -6,7 +6,7 @@ using System.ServiceModel.Web;
 using System.ServiceModel.Description;
 using System.ServiceModel;
 using System.IO;
-using System.Configuration;
+using DBCompare.Config;
 
 namespace DBCompare.Service
 {
@@ -66,7 +66,7 @@ namespace DBCompare.Service
         private static WebServiceHost Host;
         public static void Open()
         {
-            var baseUrl = ":" +ConfigurationManager.AppSettings["WebServicePort"] + "/";
+            var baseUrl = ":" + Configuration.WebServicePort + "/";
             var host = new WebServiceHost(typeof(WebService), new Uri("http://localhost" + baseUrl));
             BaseUrl = "http://" + Environment.MachineName + baseUrl;
             var ep = host.AddServiceEndpoint(typeof(IWebService), new WebHttpBinding(), "");
