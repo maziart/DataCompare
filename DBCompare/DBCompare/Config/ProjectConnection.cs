@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
+using System.Text.RegularExpressions;
 
 namespace DBCompare.Config
 {
@@ -40,10 +41,15 @@ namespace DBCompare.Config
                     throw new NotImplementedException();
             }
         }
+        private const string DataBaseTimeRegex = @"^(.+?)-(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})$";
+        private const string DataBaseTimeFormat = "[$1] at $3/$4/$2 $5:$6";
         public override string ToString()
         {
             var builder = new SqlConnectionStringBuilder(ConnectionString);
-            return string.Format("[{1}] on {0}", builder.DataSource, builder.InitialCatalog);
+            var database = Regex.Replace(builder.InitialCatalog, DataBaseTimeRegex, DataBaseTimeFormat);
+            if (database == builder.InitialCatalog)
+                database = string.Format("[{0}]", builder.InitialCatalog);
+            return string.Format("{0} on {1}", database, builder.DataSource);
         }
 
         internal bool TryConnect()

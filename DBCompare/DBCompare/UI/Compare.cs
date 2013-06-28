@@ -36,89 +36,12 @@ namespace DBCompare.UI
             BtnScripts.Enabled = BtnProject.Enabled = BtnRerun.Enabled = false;
             BtnCancel.Enabled = true;
             compareAnimation1.Start();
-            Actions = new List<IAction>();
-            States = new List<object>();
-            if (Project.RequiresBackupRestore)
-            {
-                IAction action;
-                object state;
-                Project.CreateBackUpAction(out action, out state);
-                Actions.Add(action);
-                States.Add(state);
-                Project.CreateRestoreAction(out action, out state);
-                Actions.Add(action);
-                States.Add(state);
-            }
+            backgroundWorker1.ClearActions();
             Comparer = new DatabaseComparer(Project);
-            Actions.Add(Comparer);
-            States.Add(null);
+            backgroundWorker1.AddAction(Comparer, null);
             backgroundWorker1.RunWorkerAsync();
         }
-        private List<IAction> Actions;
-        private List<object> States;
         ProjectComparisonResult Result;
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var results = new List<object>();
-            try
-            {
-                for (int i = 0; i < Actions.Count; i++)
-                {
-                    if (backgroundWorker1.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                    var action = Actions[i];
-                    try
-                    {
-                        action.ProgressChanged += Action_ProgressChanged;
-                        action.SetUserState(States[i], results.ToArray());
-                        results.Add(action.DoWork());
-                        if (action.Errors != null && action.Errors.Count > 0)
-                        {
-                            MessageBox.Show(string.Join("\n", action.Errors.Select(n => n.Message)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    finally
-                    {
-                        action.ProgressChanged -= Action_ProgressChanged;
-                    }
-                }
-                e.Result = results.ToArray();
-            }
-            catch (CancellationException)
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void Action_ProgressChanged(object sender, DBCompare.Actions.ProgressChangedEventArgs e)
-        {
-            if (!backgroundWorker1.IsBusy)
-                return;
-            var index = Actions.IndexOf((IAction)sender);
-            var percentage = index + e.Percentage / 100f;
-            percentage *= 100;
-            percentage /= Actions.Count;
-            backgroundWorker1.ReportProgress((int)percentage, new { Action = sender, Operation = e.CurrentOperation });
-        }
-        private IAction CurrentAction;
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-            dynamic state = e.UserState;
-            LblCurrentOperation.Text = state.Operation;
-            LblProgress.Text = e.ProgressPercentage + "%";
-
-            CurrentAction = (IAction)state.Action;
-            BtnCancel.Enabled = CurrentAction.SupportsCancellation;
-            if (CurrentAction.SupportsCancellation && backgroundWorker1.CancellationPending)
-            {
-                CurrentAction.CancelAsync();
-            }
-        }
-
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled)

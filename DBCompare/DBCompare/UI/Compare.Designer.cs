@@ -43,14 +43,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.compareAnimation1 = new DBCompare.UI.CompareAnimation();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.StatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.TableColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RecordsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChangesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailsColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.compareAnimation1 = new DBCompare.UI.CompareAnimation();
+            this.backgroundWorker1 = new DBCompare.UI.DBBackgroundWorker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -244,22 +244,6 @@
             this.progressBar1.Size = new System.Drawing.Size(903, 38);
             this.progressBar1.TabIndex = 1;
             // 
-            // compareAnimation1
-            // 
-            this.compareAnimation1.Location = new System.Drawing.Point(3, 4);
-            this.compareAnimation1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.compareAnimation1.Name = "compareAnimation1";
-            this.compareAnimation1.Size = new System.Drawing.Size(177, 177);
-            this.compareAnimation1.TabIndex = 0;
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -314,6 +298,24 @@
             this.DetailsColumn.Name = "DetailsColumn";
             this.DetailsColumn.ReadOnly = true;
             // 
+            // compareAnimation1
+            // 
+            this.compareAnimation1.Location = new System.Drawing.Point(3, 4);
+            this.compareAnimation1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.compareAnimation1.Name = "compareAnimation1";
+            this.compareAnimation1.Size = new System.Drawing.Size(177, 177);
+            this.compareAnimation1.TabIndex = 0;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.CancelButton = this.BtnCancel;
+            this.backgroundWorker1.CurrentOperationLabel = this.LblCurrentOperation;
+            this.backgroundWorker1.ProgressBar = this.progressBar1;
+            this.backgroundWorker1.ProgressLabel = this.LblProgress;
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // Compare
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -344,7 +346,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BtnRerun;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Button BtnProject;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -356,5 +357,6 @@
         private System.Windows.Forms.Button BtnScripts;
         private System.Windows.Forms.RadioButton RdbViewChecked;
         private System.Windows.Forms.RadioButton RdbViewAll;
+        private DBBackgroundWorker backgroundWorker1;
     }
 }

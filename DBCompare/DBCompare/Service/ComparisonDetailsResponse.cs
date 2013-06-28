@@ -117,11 +117,11 @@ namespace DBCompare.Service
                     {
                         var p1 = new HtmlGenericControl("p");
                         p1.Attributes["class"] = "OldValue";
-                        p1.Controls.AddLiteral(GetValueString(aValue, column.DataType));
+                        p1.Controls.AddLiteral(GetValueString(bValue, column.DataType));
                         td.Controls.Add(p1);
                         var p2 = new HtmlGenericControl("p");
                         p2.Attributes["class"] = "NewValue";
-                        p2.Controls.AddLiteral(GetValueString(bValue, column.DataType));
+                        p2.Controls.AddLiteral(GetValueString(aValue, column.DataType));
                         td.Controls.Add(p2);
                     }
                     else

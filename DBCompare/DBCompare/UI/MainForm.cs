@@ -46,17 +46,20 @@ namespace DBCompare.UI
             using (var selector = new DbSelectForm())
             {
                 selector.Text = type == ProjectType.Compare ? "Select Database A" : "Select Source Database";
-                if (type == ProjectType.Compare)
-                {
-                    selector.AllowServerChange = true;
-                    selector.OkButtonText = "Next";
-                }
-                else
-                {
-                    selector.AllowServerChange = false;
-                }
+
+                selector.OkButtonText = "Next";
+                selector.OkButtonImage = DBCompare.Properties.Resources.Right;
+            ShowSelector:
                 if (selector.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                     return false;
+                if (type == ProjectType.Monitor)
+                {
+                    if (!Environment.MachineName.Equals(selector.HostName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        MessageBox.Show("For monitoring projects, server must be on the same machine where DBCompare is running.\nThis is for backup and restore purposes.", "Invalid server", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        goto ShowSelector;
+                    }
+                }
                 project.SetConnectionA(selector.ConnectionString);
             }
             if (type == ProjectType.Compare)
@@ -64,10 +67,17 @@ namespace DBCompare.UI
                 using (var selector = new DbSelectForm())
                 {
                     selector.Text = "Select Database B";
-                    selector.AllowServerChange = true;
                     if (selector.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                         return false;
                     project.SetConnectionB(selector.ConnectionString);
+                }
+            }
+            else
+            {
+                using (var backupRestore = new BackupRestoreForm(project))
+                {
+                    if (backupRestore.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                        return false;
                 }
             }
             return ShowProject(project);
@@ -296,6 +306,6 @@ namespace DBCompare.UI
         {
             Compare();
         }
-        
+
     }
 }

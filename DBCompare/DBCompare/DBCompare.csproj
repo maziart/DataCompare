@@ -91,7 +91,9 @@
     <Compile Include="Comparers\CompareResult.cs" />
     <Compile Include="Comparers\TableComparer.cs" />
     <Compile Include="Comparers\TableComparisonResult.cs" />
+    <Compile Include="Config\ApplicationArguments.cs" />
     <Compile Include="Config\ApplicationSettings.cs" />
+    <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\DataCompareProject.cs" />
     <Compile Include="Config\DataProvider.cs" />
     <Compile Include="Config\ProjectConnection.cs" />
@@ -123,6 +125,12 @@
     <Compile Include="Service\ServiceAccess.cs" />
     <Compile Include="Service\WebExtensions.cs" />
     <Compile Include="Service\WebService.cs" />
+    <Compile Include="UI\BackupRestoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BackupRestoreForm.Designer.cs">
+      <DependentUpon>BackupRestoreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Compare.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -175,6 +183,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\BackupRestoreForm.resx">
+      <DependentUpon>BackupRestoreForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Compare.resx">
       <DependentUpon>Compare.cs</DependentUpon>
     </EmbeddedResource>
@@ -320,6 +331,7 @@
     <Content Include="Favicon.ico" />
     <EmbeddedResource Include="Service\Files\Favicon.ico" />
     <None Include="Resources\Script.png" />
+    <None Include="Resources\Right.png" />
     <Content Include="Service\Files\HTMLPage1.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
